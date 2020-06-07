@@ -40,10 +40,12 @@ async def python(ctx, arg):
     sys.stdout = console
     with open("listeretour.txt","r") as listeretour:
         for num in listeretour:
-            nomfichier = "retour"+num+".txt"
-            nomfichier = nomfichier.replace("\n","")
-            #print(nomfichier)
-            with open(nomfichier,"r") as retour:
+            nomretour = "retours/retour"+num+".txt"
+            nomretour = nomretour.replace("\n","")
+            nommessage = "messages/message"+num+".py"
+            nommessage = nommessage.replace("\n","")
+            #print(nomretour)
+            with open(nomretour,"r") as retour:
                 retourcomplet = retour.read().split("\n")
                 print(retourcomplet)
                 guilde = bot.get_guild(int(retourcomplet[0]))
@@ -57,7 +59,8 @@ async def python(ctx, arg):
                     texte = texte+"\n"+str(retourcomplet[i])
                 texte = texte+"\n```"
                 await canal.send(str(texte))
-            os.remove(nomfichier)
+            os.remove(nomretour)
+            os.remove(nommessage)
             with open("listeretour.txt","r") as listeretour:
                 tousretour = listeretour.read()
             nouvretour = tousretour.replace(num,"")

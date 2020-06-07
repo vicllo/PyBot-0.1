@@ -39,14 +39,14 @@ def main(ctx, arg):
 
     def func():
         print(threading.get_ident())
-        with open("message"+str(threading.get_ident())+".py","w") as message:
+        with open("messages/message"+str(threading.get_ident())+".py","w") as message:
             message.write(str(ctx.message.content).replace("!python ",""))
-        with open("retour"+str(threading.get_ident())+".txt","a") as retour:
+        with open("retours/retour"+str(threading.get_ident())+".txt","a") as retour:
             retour.write(str(ctx.message.guild.id)+"\n")
             retour.write(str(ctx.message.channel.id)+"\n")
             retour.write(str(ctx.message.author.id)+"\n")
             sys.stdout = retour
-            fichier = "message"+str(threading.get_ident())+".py"
+            fichier = "messages/message"+str(threading.get_ident())+".py"
             try:
                 exec(open(fichier).read(),{})
             except:
