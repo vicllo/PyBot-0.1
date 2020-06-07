@@ -1,0 +1,1 @@
+help = "Ceci est l'aide"
