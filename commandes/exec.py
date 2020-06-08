@@ -1,5 +1,5 @@
 import traceback
-def main(ctx, arg):
+def main(ctx, prgm):
     # Python program using
     # traces to kill threads
 
@@ -40,7 +40,7 @@ def main(ctx, arg):
     def func():
         print(threading.get_ident())
         with open("messages/message"+str(threading.get_ident())+".py","w") as message:
-            message.write(str(ctx.message.content).replace("!python ",""))
+            message.write(prgm.content)
         with open("retours/retour"+str(threading.get_ident())+".txt","a") as retour:
             retour.write(str(ctx.message.guild.id)+"\n")
             retour.write(str(ctx.message.channel.id)+"\n")
@@ -51,7 +51,7 @@ def main(ctx, arg):
                 exec(open(fichier).read(),{})
             except:
                 retour.write(''.join(traceback.format_exception(*sys.exc_info())))
-        with open("listeretour.txt","a") as listeretour:
+        with open("listeretour.txt","w") as listeretour:
             listeretour.write(str(threading.get_ident())+"\n")
 
 

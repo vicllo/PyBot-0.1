@@ -1,1 +1,1 @@
-
+sendmsg = "Envoyez un message"

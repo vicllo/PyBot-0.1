@@ -32,6 +32,23 @@ async def librairies(ctx):
 async def test(ctx):
     await ctx.send("test")
 
+
+@bot.command()
+async def python(ctx):
+    sys.stdout = console
+    channel = ctx.channel
+    authorid = ctx.author.id
+    def check(m):
+        return m.channel == channel and m.author.id == authorid
+    messagebot = await ctx.send(includes.constants.sendmsg)
+    prgm = await bot.wait_for('message', check=check)
+    await messagebot.delete(delay=2)
+    if prgm.content.startswith("```"):
+        prgm.content = prgm.content.replace("```python","")
+        prgm.content = prgm.content.replace("```","")
+    commandes.exec.main(ctx, prgm)
+    await commandes.envoi.retour(ctx)
+"""
 @bot.command()
 async def python(ctx, arg):
     print(arg)
@@ -66,7 +83,7 @@ async def python(ctx, arg):
             nouvretour = tousretour.replace(num,"")
             with open("listeretour.txt","w") as listeretour:
                 listeretour.write(nouvretour)
-
+"""
 token = os.environ.get("DISCORD_BOT_SECRET")
 #lancement
 bot.run(token)
