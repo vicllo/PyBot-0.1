@@ -10,13 +10,15 @@ async def retour(ctx):
                 fichier = 'retours/retour'+cle+".txt"
                 with open(fichier,"r") as retour:
                     retour = retour.read().split("\n")
+                    print(retour)
                     texte = "```"
                     for i in range(3, len(retour) - 1):
                         retour[i] = re.sub("\"", "\\\"", retour[i])
                         texte = texte + "\n" + str(retour[i])
                     texte = texte + "\n```"
-                    messagereponse = await ctx.send(str(texte))
-                    await messagereponse.add_reaction(includes.constants.emotrash)
+                    if texte != "```\n```":
+                        messagereponse = await ctx.send(str(texte))
+                        await messagereponse.add_reaction(includes.constants.emotrash)
                 os.remove(fichier)
                 os.remove("messages/message"+str(cle)+".py")
             newlisteretour = listeretour.read().replace(cle,"")

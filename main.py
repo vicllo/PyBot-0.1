@@ -47,7 +47,7 @@ async def python(ctx):
     if prgm.content.startswith("```"):
         prgm.content = prgm.content.replace("```python","")
         prgm.content = prgm.content.replace("```","")
-    commandes.exec.main(ctx, prgm)
+    await commandes.exec.main(ctx, prgm, console)
     await commandes.envoi.retour(ctx)
 
 @bot.event
