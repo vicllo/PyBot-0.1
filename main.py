@@ -11,6 +11,7 @@ from commandes import *
 bot = commands.Bot(command_prefix="!")
 console = sys.stdout
 
+
 #detecter l'allumage du bot
 @bot.event
 async def on_ready():
@@ -32,7 +33,6 @@ async def librairies(ctx):
 async def test(ctx):
     await ctx.send("test")
 
-
 @bot.command()
 async def python(ctx):
     sys.stdout = console
@@ -43,47 +43,22 @@ async def python(ctx):
     messagebot = await ctx.send(includes.constants.sendmsg)
     prgm = await bot.wait_for('message', check=check)
     await messagebot.delete(delay=2)
+    await ctx.message.delete(delay=2)
     if prgm.content.startswith("```"):
         prgm.content = prgm.content.replace("```python","")
         prgm.content = prgm.content.replace("```","")
     commandes.exec.main(ctx, prgm)
     await commandes.envoi.retour(ctx)
-"""
-@bot.command()
-async def python(ctx, arg):
-    print(arg)
-    print(ctx.message.content)
-    commandes.exec.main(ctx, arg)
-    sys.stdout = console
-    with open("listeretour.txt","r") as listeretour:
-        for num in listeretour:
-            nomretour = "retours/retour"+num+".txt"
-            nomretour = nomretour.replace("\n","")
-            nommessage = "messages/message"+num+".py"
-            nommessage = nommessage.replace("\n","")
-            #print(nomretour)
-            with open(nomretour,"r") as retour:
-                retourcomplet = retour.read().split("\n")
-                print(retourcomplet)
-                guilde = bot.get_guild(int(retourcomplet[0]))
-                print(guilde)
-                print(int(retourcomplet[1]))
-                canal = guilde.get_channel(int(retourcomplet[1]))
-                auteur = retourcomplet[2]
-                texte = "```"
-                for i in range(3,len(retourcomplet)-1):
-                    retourcomplet[i] = re.sub("\"","\\\"",retourcomplet[i])
-                    texte = texte+"\n"+str(retourcomplet[i])
-                texte = texte+"\n```"
-                await canal.send(str(texte))
-            os.remove(nomretour)
-            os.remove(nommessage)
-            with open("listeretour.txt","r") as listeretour:
-                tousretour = listeretour.read()
-            nouvretour = tousretour.replace(num,"")
-            with open("listeretour.txt","w") as listeretour:
-                listeretour.write(nouvretour)
-"""
+
+@bot.event
+async def on_raw_reaction_add(payload):
+    channel = bot.get_channel(payload.channel_id)
+    messageReaction = await channel.fetch_message(payload.message_id)
+    if messageReaction.author.id == includes.constants.botid and payload.user_id != includes.constants.botid:
+        if payload.emoji.name == includes.constants.emotrash:
+            await messageReaction.delete()
+
+
 token = os.environ.get("DISCORD_BOT_SECRET")
 #lancement
 bot.run(token)

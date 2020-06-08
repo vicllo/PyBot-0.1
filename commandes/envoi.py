@@ -1,5 +1,6 @@
 import os
 import re
+import includes.main
 
 async def retour(ctx):
     with open('listeretour.txt',"r") as listeretour:
@@ -14,7 +15,8 @@ async def retour(ctx):
                         retour[i] = re.sub("\"", "\\\"", retour[i])
                         texte = texte + "\n" + str(retour[i])
                     texte = texte + "\n```"
-                    await ctx.send(str(texte))
+                    messagereponse = await ctx.send(str(texte))
+                    await messagereponse.add_reaction(includes.constants.emotrash)
                 os.remove(fichier)
                 os.remove("messages/message"+str(cle)+".py")
             newlisteretour = listeretour.read().replace(cle,"")
