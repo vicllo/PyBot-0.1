@@ -6,7 +6,7 @@ import constants
 import exec
 import sys
 import os
-
+from dotenv import load_dotenv
 intents = discord.Intents.all()
 intents.members = True
 
@@ -76,6 +76,7 @@ async def on_raw_reaction_add(payload):
 
 
 print("Let's go")
-token = os.environ['TOKEN']
+load_dotenv()
+token = os.getenv('TOKEN')
 bot.run(token)
 
