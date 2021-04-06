@@ -77,5 +77,5 @@ async def on_raw_reaction_add(payload):
 
 print("Let's go")
 token = os.environ['TOKEN']
-bot.run("Njg5OTM0OTY4Mjg1Mjk4ODA4.Xwtyrg.b9KPlxtFXp4mFWuCqv7aVkRYwK8")
+bot.run(token)
 
